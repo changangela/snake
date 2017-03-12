@@ -6,6 +6,12 @@ var FRAME_RATE = 11;
 var snake;
 var apple;
 
+
+var mic = new p5.SpeechRec();
+mic.continuous = true;
+mic.interimResults = true;
+
+
 function randomPosition() {
     var x = floor(random((CANVAS_X - CANVAS_X % GRID_SIZE) / GRID_SIZE));
     var y = floor(random((CANVAS_Y - CANVAS_Y % GRID_SIZE) / GRID_SIZE));
@@ -19,6 +25,39 @@ function setup() {
     snake = new Snake(CANVAS_X / GRID_SIZE * 0.5 - 1, CANVAS_Y / GRID_SIZE * 0.50 - 1, "green");
     apple = new Apple();
     fill(255);
+
+    mic.onResult = parseResult;
+    mic.start();
+}
+
+function parseResult() {
+
+    var word = mic.resultString.split(' ').pop();
+    console.log(word);
+
+    if (word.indexOf('d') != -1) {
+        snake.face(0, 1);
+    } else if (word.indexOf('o') != -1) {
+        snake.face(0, 1);
+    } else if (word.indexOf('w') != -1) {
+        snake.face(0, 1);
+    } else if (word.indexOf('n') != -1) {
+        snake.face(0, 1);
+    } else if (word.indexOf('u') != -1) {
+        snake.face(0, -1);
+    } else if (word.indexOf('p') != -1) {
+        snake.face(0, -1);
+    } else if (word.indexOf('l') != -1) {
+        snake.face(-1, 0);
+    } else if (word.indexOf('f') != -1) {
+        snake.face(-1, 0);
+    } else if (word.indexOf('e') != -1) {
+        snake.face(-1, 0);
+    } else if (word.indexOf('r') != -1) {
+        snake.face(1, 0);
+    } else if (word.indexOf('i') != -1) {
+        snake.face(1, 0);
+    }
 }
 
 function draw() {
@@ -51,7 +90,7 @@ function keyPressed() {
     } else if (key === 'D') {
         snake.face(1, 0);
     }
-    
+
     if (keyCode === UP_ARROW) {
         snake.face(0, -1);
     } else if (keyCode === DOWN_ARROW) {
