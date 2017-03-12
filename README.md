@@ -1,3 +1,3 @@
-# TRON
+# Snake
 
-![TRON](tron.png)
+![Snake](snake.png)
