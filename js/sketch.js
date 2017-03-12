@@ -1,7 +1,7 @@
 var GRID_SIZE = 20;
 var CANVAS_X = 750;
 var CANVAS_Y = 500;
-var FRAME_RATE = 11;
+var FRAME_RATE = 9;
 
 var snake;
 var apple;
@@ -31,34 +31,19 @@ function setup() {
 }
 
 function parseResult() {
-
-    var word = mic.resultString.split(' ').pop();
-    console.log(word);
-
-    if (word.indexOf('d') != -1) {
-        snake.face(0, 1);
-    } else if (word.indexOf('o') != -1) {
-        snake.face(0, 1);
-    } else if (word.indexOf('w') != -1) {
-        snake.face(0, 1);
-    } else if (word.indexOf('n') != -1) {
-        snake.face(0, 1);
-    } else if (word.indexOf('u') != -1) {
-        snake.face(0, -1);
-    } else if (word.indexOf('p') != -1) {
-        snake.face(0, -1);
-    } else if (word.indexOf('l') != -1) {
+    var mostrecentword = myRec.resultString.split(' ').pop();
+    if(mostrecentword.indexOf("left")!==-1) {
         snake.face(-1, 0);
-    } else if (word.indexOf('f') != -1) {
-        snake.face(-1, 0);
-    } else if (word.indexOf('e') != -1) {
-        snake.face(-1, 0);
-    } else if (word.indexOf('r') != -1) {
+    } else if(mostrecentword.indexOf("right")!==-1) {
         snake.face(1, 0);
-    } else if (word.indexOf('i') != -1) {
-        snake.face(1, 0);
+    } else if(mostrecentword.indexOf("up")!==-1) {
+        snake.face(0, -1);
+    } else if(mostrecentword.indexOf("down")!==-1) {
+        snake.face(0, 1);
     }
+    console.log(mostrecentword);
 }
+
 
 function draw() {
     background("#98fb98");
