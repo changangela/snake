@@ -31,7 +31,7 @@ function setup() {
 }
 
 function parseResult() {
-    var mostrecentword = myRec.resultString.split(' ').pop();
+    var mostrecentword = mic.resultString.split(' ').pop();
     if(mostrecentword.indexOf("left")!==-1) {
         snake.face(-1, 0);
     } else if(mostrecentword.indexOf("right")!==-1) {
