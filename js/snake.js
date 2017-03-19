@@ -4,7 +4,7 @@ function Snake(x, y, snakeColor) {
     this.dead = false;
     this.tail = [];
     this.tail.push(this.position);
-    this.size = 2;
+    this.size = 1;
 
     this.update = function() {
         // Update current position

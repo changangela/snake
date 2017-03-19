@@ -1,11 +1,11 @@
 var GRID_SIZE = 20;
 var CANVAS_X = 750;
 var CANVAS_Y = 500;
-var FRAME_RATE = 9;
+var FRAME_RATE = 10;
 
 var snake;
 var apple;
-
+var menu;
 
 var mic = new p5.SpeechRec();
 mic.continuous = true;
@@ -28,6 +28,8 @@ function setup() {
 
     mic.onResult = parseResult;
     mic.start();
+
+    menu = new Menu(CANVAS_X, CANVAS_Y);
 }
 
 function parseResult() {
@@ -47,20 +49,43 @@ function parseResult() {
 
 function draw() {
     background("#98fb98");
-
+    stroke(0);
     if (snake.eats(apple)) {
         apple = new Apple();
         snake.grow();
     }
 
-    snake.update();
-    snake.checkStatus();
-    snake.show();
-    apple.show();
+    if (menu.isDead()) {
+        if (snake.dead) {
+            snake = new Snake(CANVAS_X / GRID_SIZE * 0.5 - 1, CANVAS_Y / GRID_SIZE * 0.50 - 1, "green");
+            apple = new Apple();
+
+        }
+        snake.update();
+        snake.checkStatus();
+        snake.show();
+        apple.show();
+    } else {
+        if (snake.dead) {
+            snake.show();
+        } else {
+            var menuSnake = new Snake(CANVAS_X / GRID_SIZE * 0.5 - 1, CANVAS_Y / GRID_SIZE * 0.50 - 1, "green");
+            var menuApple = new Apple();
+            menuApple.position = createVector(parseInt(CANVAS_X / GRID_SIZE * 0.5 + 4), parseInt(CANVAS_Y / GRID_SIZE * 3 / 4));
+            menuSnake.tail[0] = (createVector(parseInt(CANVAS_X / GRID_SIZE * 0.5 - 7), parseInt(CANVAS_Y / GRID_SIZE * 3 / 4)));
+            for (var i = -6; i < 3; ++i) {
+                menuSnake.tail.push(createVector(parseInt(CANVAS_X / GRID_SIZE * 0.5 + i), parseInt(CANVAS_Y / GRID_SIZE  * 3 / 4)));
+            }
+            menuSnake.show();
+            menuApple.show();
+        }
+        menu.show();
+    }
+
     if (snake.dead) {
         fill(0);
-        text("You lost! Refresh (f5) to play again.", 20, 20);
-        exit();
+        text("You lost! Your score was: " + snake.size, CANVAS_X * 0.5, CANVAS_Y * 3 / 4);
+        menu.dead = false;
     }
 }
 
